@@ -19,11 +19,19 @@ function TimeBooker() {
                     onSelect={setDate}
                     className="rounded-md border"
                 />
-                <ScrollArea className="h-[350px] w-[350px] rounded-md border p-4 overflow-y-auto">
-                    {Array.from({ length: 24 }, (_, index) => (
-                        <Skeleton key={index} className="h-[40px] rounded-full my-4" />
-                    ))}
-                </ScrollArea>
+                <div className="h-[350px] w-[350px] flex flex-col">
+                    <div className="h-[50px] flex items-center justify-center border rounded-md mb-4">
+                        {date ? date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : "Select a date"}
+                    </div>
+                    <div className="flex-1 rounded-md border p-4 overflow-y-auto">
+                        <ScrollArea className="h-full">
+                            {Array.from({ length: 24 }, (_, index) => (
+                                <Skeleton key={index} className="h-[40px] rounded-full my-4" />
+                            ))}
+                        </ScrollArea>
+                    </div>
+                </div>
+
             </div>
 
             <Button className="mt-4">Book Hour</Button>
