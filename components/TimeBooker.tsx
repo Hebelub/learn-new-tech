@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Skeleton } from "@/components/ui/skeleton"
+import BookedHour from './BookedHour'
 
 function TimeBooker() {
 
@@ -24,9 +25,16 @@ function TimeBooker() {
                         {date ? date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : "Select a date"}
                     </div>
                     <div className="flex-1 rounded-md border p-4 overflow-y-auto">
+                    
                         <ScrollArea className="h-full">
                             {Array.from({ length: 24 }, (_, index) => (
-                                <Skeleton key={index} className="h-[40px] rounded-full my-4" />
+                                <BookedHour 
+                                    key={index} 
+                                    id={''} 
+                                    fromTime={new Date()} 
+                                    toTime={new Date()} 
+                                    description={'PT session with John Doe.'}
+                                />
                             ))}
                         </ScrollArea>
                     </div>
