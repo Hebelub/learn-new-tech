@@ -1,8 +1,19 @@
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import { migrate } from "drizzle-orm/better-sqlite3/migrator";
+import Database from "better-sqlite3";
+
 import { publicProcedure, router } from "./trpc";
+
+import { todos } from "@/db/schema";
+
+const sqlite = new Database("sqlite.db");
+const db = drizzle(sqlite);
+
+migrate(db, { migrationsFolder: "drizzle" });
 
 export const appRouter = router({
     getTodos: publicProcedure.query(async () => {
-        return [10, 20, 30];
+        return await db.select().from(todos).all();
     }),
 });
 
