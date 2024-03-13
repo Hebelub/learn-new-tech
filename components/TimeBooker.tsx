@@ -41,8 +41,6 @@ function TimeBooker() {
                 </div>
 
             </div>
-
-            <Button className="mt-4">Book Hour</Button>
         </div>
     )
 }
