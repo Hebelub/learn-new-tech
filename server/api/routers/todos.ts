@@ -35,4 +35,17 @@ export const todosRouter = router({
                 .run();
             return true;
         }),
+    delete: publicProcedure
+        .input(
+            z.object({
+                id: z.number(),
+            })
+        )
+        .mutation(async (opts) => {
+            db
+                .delete(todos)
+                .where(eq(todos.id, opts.input.id))
+                .run();
+            return true;
+        }),
 });
