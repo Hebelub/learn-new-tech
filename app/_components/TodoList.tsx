@@ -3,11 +3,16 @@ import { useState } from "react";
 
 import { trpc } from "../_trpc/client";
 import { serverClient } from "../_trpc/serverClient";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+
 
 export default function TodoList({
     initialTodos
 }: {
-    initialTodos: Awaited<ReturnType<(typeof serverClient)["todos"]["getAll"]>> 
+    initialTodos: Awaited<ReturnType<(typeof serverClient)["todos"]["getAll"]>>
 }) {
     const getTodos = trpc.todos.getAll.useQuery(undefined, {
         initialData: initialTodos,
@@ -29,34 +34,35 @@ export default function TodoList({
 
     return (
         <div>
-            <div className="text-black my-5 text-3xl">
+            <div className="my-5">
                 {getTodos?.data?.map((todo) => (
-                    <div key={todo.id} className="flex gap-3 items-center">
-                        <input
+                    <div key={todo.id} className="flex gap-3 my-2">
+                        <Checkbox
                             id={`check-${todo.id}`}
-                            type="checkbox"
                             checked={!!todo.done}
-                            onChange={async () => {
+                            onCheckedChange={async (checked) => {
+                                const doneValue = checked ? 1 : 0;
                                 setDone.mutate({
-                                    id: todo.id,
-                                    done: todo.done ? 0 : 1,
+                                  id: todo.id,
+                                  done: doneValue,
                                 });
-                            }}
-                            style={{ zoom: 1.5 }}
+                              }}
                         />
-                        <label htmlFor={`check-${todo.id}`}>{todo.content}</label>
+                        <Label htmlFor={`check-${todo.id}`}>
+                            {todo.content}
+                        </Label>
                     </div>
                 ))}
             </div>
             <div className="flex gap-3 items-center">
-                <label htmlFor="content">Content</label>
-                <input
+                <Label htmlFor="content">Content</Label>
+                <Input
                     id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     className="text-black"
                 />
-                <button 
+                <Button
                     onClick={async () => {
                         if (content.length) {
                             addTodo.mutate(content);
@@ -65,7 +71,7 @@ export default function TodoList({
                     }}
                 >
                     Add Todo
-                </button>
+                </Button>
             </div>
         </div>
     );
