@@ -8,6 +8,13 @@
       "when": 1710338408759,
       "tag": "0000_redundant_maestro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1711101274622,
+      "tag": "0001_elite_purifiers",
+      "breakpoints": true
     }
   ]
 }
